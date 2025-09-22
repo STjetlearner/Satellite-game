@@ -1,6 +1,6 @@
 import pgzrun
 import random
-
+from time import time
 
 WIDTH = 700
 HEIGHT = 500
@@ -13,12 +13,20 @@ total_satellites=8
 satellites = []
 lines = []
 
+
 for i in range (total_satellites):
     satellite = Actor ("satellite")
-    satellite.pos = random.randint (0, 700), random.randint (0, 500)
+    satellite.pos = random.randint (0, 650), random.randint (0, 450)
     satellites.append(satellite)
     
+global start_time
+start_time=time()
+
+def update():
+    pass
+
 def draw():
+    global start_time, elapsed_time
     message=1
     screen.blit("star background", (0, 0))
     for i in satellites:
@@ -29,8 +37,12 @@ def draw():
         
         screen.draw.line(line[0], line[1], (255, 255, 255))
 
-
-
+    if next_satellite<total_satellites:
+        elapsed_time=time()-start_time
+        elapsed_time=round(elapsed_time,2)
+        screen.draw.text(str(elapsed_time),(650, 0), color="green")
+    else:
+        screen.draw.text(str(elapsed_time),(650, 0), color="green")
 def on_mouse_down(pos):
     global next_satellite, lines
     if next_satellite<total_satellites:
